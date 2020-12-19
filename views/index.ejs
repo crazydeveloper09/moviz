@@ -1,0 +1,54 @@
+<%- include("partials/header") %>
+    <div class="container">
+       
+        <% if(error.length > 0){ %>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-12">
+                    <div class="alert alert-danger text-center">
+                        <%= error %>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+       
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title text-center">Sprawdź swoją bajkową wiedzę z Moviz!</div>
+                        
+                        <h3 class="section text-center">Wylosuj pytanie</h3>
+                        <form action="/questions/random" method="post">
+                            <p class="form_desc">Wybierz kategorię</p>
+                            <select name="category" class="form-control">
+                                <option>Łatwe</option>
+                                <option>Średnie</option>
+                                <option>Trudne</option>
+                            </select>
+                            <br>
+                            <p class="form_desc">Wybierz typ</p>
+                            <select name="type" class="form-control">
+                                <option>Kadr</option>
+                                <option>Cytat</option>
+                                <option>Soundtrack</option>
+                                <option>Piosenka</option>
+                                <option>Postacie</option>
+                                <option>Data produkcji</option>
+                            </select>
+                            <br>
+                            <p class="form_desc">Wybierz formę odpowiedzi</p>
+                            <select name="answerType" class="form-control">
+                                <option value="write">Wpisz odpowiedź</option>
+                                <option value="choose">ABCD</option>
+                                
+                            </select>
+                            <br>
+                            <input type="submit" value="Wylosuj pytanie" class="btn btn-primary button">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include("partials/footer") %>

@@ -1,0 +1,69 @@
+body,
+html {
+    background-color: #7a519e;
+}
+
+.container-full {
+    width: 100vw;
+}
+
+#info {
+    background: #7a519e;
+    height: 100vh;
+}
+#info .logo {
+    font-family: 'Nunito', sans-serif;
+    font-size: 55px;
+    color: white;
+}
+
+#info .description {
+    font-family: 'Nunito', sans-serif;
+    font-size: 25px;
+    color: white;
+}
+
+#form {
+    background: #1a1a1a;
+}
+
+a {
+    font-family: 'Nunito', sans-serif;
+    color: white;
+    font-size: 18px;
+}
+
+#form .login {
+    font-family: 'Nunito', sans-serif;
+    font-size: 45px;
+    font-weight: 700;
+    color: #7a519e
+}
+
+#form .username {
+    font-family: 'Nunito', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    color: white;
+}
+
+#form .button {
+    width: 100%;
+    margin-bottom: 15px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    background: #7a519e;
+    border-color: #7a519e;
+}
+
+@media (max-width: 992px) {
+    #info {
+        display: none;
+    }
+    #form1 {
+        padding: 4%;
+    }
+    body {
+        background: #1a1a1a;
+    }
+}

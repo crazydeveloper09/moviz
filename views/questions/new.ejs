@@ -1,0 +1,99 @@
+<%- include("../partials/headera") %>
+<div class="col-lg-6 col-md-12" id="form">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-12" style="margin-top: 3%">
+            <div id="form1">
+                <a href="/dashboard">
+                    <i class="fas fa-arrow-left"></i>
+                    Wróć do panelu administracyjnego
+                </a>
+                <h1 class="login">Dodaj pytanie</h1>
+                <% if(error.length > 0){ %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
+                <% } %>
+                <% if(success.length > 0){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                <% } %>
+                <form action="/questions" method="post" enctype="multipart/form-data">
+                   
+                    <label for="username" class="username">
+                        Wybierz kategorię
+                        
+                    </label>
+                    <select name="category" class="form-control">
+                        <option>Łatwe</option>
+                        <option>Średnie</option>
+                        <option>Trudne</option>
+                    </select>
+                    <br>
+                    <label for="username" class="username">
+                        Wybierz typ
+                        
+                    </label>
+                    <select name="type" id="type" class="form-control">
+                        <option>Kadr</option>
+                        <option>Cytat</option>
+                        <option>Soundtrack</option>
+                        <option>Piosenka</option>
+                        <option>Postacie</option>
+                        <option>Data produkcji</option>
+                    </select>
+                    <br>  
+                    <label for="username" class="username">
+                       Podaj tytuł
+                        
+                    </label>
+                    <input type="text" name="title" placeholder="np. Z jakiej bajki jest ten kadr?" class="form-control">
+                    <br>
+                    <label for="username" class="username">
+                        Podaj czas na odpowiedź
+                         
+                     </label>
+                     <input type="number" name="timeToAnswer" placeholder="np. 60" class="form-control">
+                     <br>
+                     <div id="heroType" class="d-none">
+                        <label for="username" class="username">
+                            Wybierz, czego dotyczy pytanie
+                             
+                        </label>
+                        <select name="heroType" id="heroTypeSelect" class="form-control">
+                            <option>Zdjęcie bohatera</option>
+                            <option>Imię bohatera</option>
+                        </select>
+                        <br>
+                     </div>
+                     <div id="quote" class="d-none">
+                        <label for="username" class="username quote_desc">
+                            Wklej cytat
+                             
+                        </label>
+                        <textarea name="quote" placeholder="Muszu, ty geniuszu" class="form-control"></textarea>
+                        <br>
+                     </div>
+                     
+                     <div id="file" class="d-none">
+                        <label for="username" class="username file_desc">
+                            Dodaj plik
+                             
+                        </label>
+                        <br>
+                        <input type="file" name="file" style="color: white;">
+                        <br>
+                        <br>
+                     </div>
+                    <input type="submit" value="Dodaj pytanie" class="btn btn-danger button">
+                   
+                </form>
+            </div>
+           
+        </div>
+        
+    </div>
+</div>
+<script src="/questionAdding.js"></script>
+</body>
+</html>

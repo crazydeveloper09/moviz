@@ -1,0 +1,52 @@
+<%- include("../partials/headera") %>
+<div class="col-lg-6 col-md-12" id="form">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-12" style="margin-top: 10%">
+            <div id="form1">
+                <a href="/dashboard">
+                    <i class="fas fa-arrow-left"></i>
+                    Wróć do panelu administracyjnego
+                </a>
+                <h1 class="login">Edytuj odpowiedź na pytanie <q><%= question.title %></q></h1>
+                <% if(error.length > 0){ %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
+                <% } %>
+                <% if(success.length > 0){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                <% } %>
+                <form action="/questions/<%= question._id %>/answers/<%= answer._id %>?_method=PUT" method="post">
+                   
+                    <label for="username" class="username">
+                        Edytuj typ
+                        
+                    </label>
+                    <select name="answer[type]" class="form-control">
+                        <option><%= answer.type %></option>
+                        <option>Poprawna</option>
+                        <option>Niepoprawna</option>
+                    </select>
+                    <br>
+                    
+                    <label for="username" class="username">
+                       Edytuj tekst odpowiedzi
+                        
+                    </label>
+                    <textarea name="answer[text]" placeholder="Mulan" class="form-control"><%= answer.text %></textarea>
+                    <br>
+                    
+                    <input type="submit" value="Edytuj odpowiedź na pytanie" class="btn btn-danger button">
+                   
+                </form>
+            </div>
+           
+        </div>
+        
+    </div>
+</div>
+
+</body>
+</html>

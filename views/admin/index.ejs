@@ -1,0 +1,46 @@
+<%- include("../partials/header") %>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center title">Wszyscy administratorzy</div>
+    </div>
+</div>
+<% if(admins.length === 0){ %>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-12">
+                <div class="alert alert-dark text-center">
+                    Nie ma jeszcze administratorów
+                </div>
+            </div>
+        </div>
+    </div>
+<% } else { %>
+    <div class="container">
+        <div class="row">
+            <% admins.forEach((admin) => { %>
+                <div class="col-lg-12">
+                    <div class="float-left">
+                        <p class="description">
+                            <%= admin.name %>
+                            <br>
+                            <span class="footer"><%= admin.username %></span>
+                        </p>
+                       
+                    </div>
+                    <div class="float-right" style="color: white;">
+                        
+                        <% if(currentUser._id == admin._id){ %>
+                            <a href="/admin/<%= admin._id %>/edit" class="btn btn-secondary">Edytuj</a>
+                        <% } %>
+                        <a href="/admin/<%= admin._id %>/delete" class="btn btn-dark">Usuń</a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+<% } %> 
+
+
+
+<%- include("../partials/footer") %>

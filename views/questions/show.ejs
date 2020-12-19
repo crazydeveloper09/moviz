@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="<%= question.timeToAnswer %>, url=/questions/<%= question._id %>/answers/response?response=noTimeLeft">
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Roboto:ital,wght@0,100;0,400;1,300&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;1,300&display=swap" rel="stylesheet">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.js" async></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/b2ec1cb26d.js" crossorigin="anonymous" async></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" async></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" async></script>
+    <title><%= header %></title>
+</head>
+<body>
+    
+        <div class="container-full">
+            <div class="row">
+                <div class="col-lg-12" id="header">
+                    <h1 id="link">
+                        <a href="/">Moviz</a>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    
+   
+    <div class="container">
+       
+        <% if(error.length > 0){ %>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-12">
+                    <div class="alert alert-danger text-center">
+                        <%= error %>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+       
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <% if(question.type === "Kadr" || question.type === "Postacie"){ %>
+                            <% if(question.type === "Kadr" || question.heroType === "Zdjęcie bohatera"){ %>
+                                <img src="<%= question.file %>" alt="Zdjęcie pytania lub postaci">
+                            <% } %>
+                        <% } %>
+                        
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="clock text-center" id="clock">
+                                    <%= question.timeToAnswer %>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <br>
+                        <progress id="progress" value="<%= question.timeToAnswer %>" min="0" max="<%= question.timeToAnswer %>"></progress>
+                        <div class="text-center">
+                            <a href="/" class="btn btn-primary button-small">Wylosuj inne pytanie</a>
+                        </div>
+                       
+                        <div class="card-title text-center">
+                            <%= question.title %>
+                        </div>
+                        
+                        <% if(question.type === "Soundtrack" || question.type === "Piosenka"){ %>
+                            <audio src="<%= question.file %>" controls="controls"></audio>
+                        <% } %>
+                        
+                        <% if(question.type === "Cytat"){ %>
+                            <div class="text-center">
+                                <q class="quote"><strong><%= question.quote %></strong></q>
+                            </div>
+                            
+                        <% } %>
+                        <form action="/questions/<%= question._id %>/answers/check?question_category=<%= question.type %>" method="post">
+                            <% if(answerType === "choose"){ %>
+                                <% answers.forEach((answer) => { %>
+                                    <label class="radio">
+                                        <input type="radio" name="answer" value="<%= answer.text %>" checked>
+                                        <div class="radioButton"></div>
+                                        <p class="answer"><%= answer.text %></p>
+                                    </label>
+                                   <br>
+                                <% }) %>
+                            <% } else { %>
+                                <p class="form_desc">Wpisz odpowiedź</p>
+                                <input type="text" name="answer" placeholder="Odpowiedź na pytanie" class="form-control">
+                                <br>
+                            <% } %>
+                            <input type="submit" value="Wyślij odpowiedź" class="btn btn-primary button">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let value = document.getElementById("clock").innerText;
+        let remainingValue = parseInt(document.getElementById("clock").innerText);
+        
+        let progressBar = document.getElementById("progress")
+        
+        setInterval(function() {
+            remainingValue--;
+            document.getElementById("clock").innerText = remainingValue;
+          
+            
+            progressBar.value= remainingValue;
+          
+        }, 1000)
+    </script>
+<%- include("../partials/footer") %>

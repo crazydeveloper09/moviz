@@ -1,0 +1,94 @@
+<%- include("partials/header") %>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center title">Pytania, które dodałeś</div>
+    </div>
+</div>
+<% if(questions.length === 0){ %>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-12">
+                <div class="alert alert-dark text-center">
+                    Nie dodałeś jeszcze pytań
+                </div>
+            </div>
+        </div>
+    </div>
+<% } else { %>
+    <div class="container">
+        <div class="row">
+            <% console.log(questions[3]) %>
+            <% questions.forEach((question) => { %>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card">
+                        
+                        
+                        <div class="card-body admin">
+                          
+                            <% if(question.type === "Kadr" || question.type === "Postacie"){ %>
+                                <% if(question.type === "Kadr" || question.heroType === "Zdjęcie bohatera"){ %>
+                                    <img src="<%= question.file %>" alt="Zdjęcie pytania lub postaci">
+                                <% } %>
+                            <% } %>
+                            <div class="card-title text-center admin_title">
+                                <%= question.title %>
+                            </div>
+                            <% if(question.type === "Soundtrack" || question.type === "Piosenka"){ %>
+                                <audio src="<%= question.file %>" controls="controls"></audio>
+                            <% } %>
+                            <p class="description">
+                                Kategoria: <strong><%= question.category %></strong>
+                            </p>
+                            <p class="description">
+                                Typ: <strong><%= question.type %></strong>
+                            </p>
+                            
+                            <p class="description">
+                                Czas na odpowiedź: <strong><%= question.timeToAnswer %></strong>
+                            </p>
+                            <% if(question.type === "Cytat"){ %>
+                                <p class="description">
+                                    Cytat: <strong><%= question.quote %></strong>
+                                </p>
+                            <% } %>
+                            <% if(question.answers.length !== 0){ %>
+                                <p class="description">Odpowiedzi:</p>
+                                <ul class="description">
+                                   
+                                    <% question.answers.forEach((answer) => { %>
+                                        <% if(answer.type){ %>
+                                            <li>
+                                                <mark><%= answer.text %></mark>
+                                                <br>
+                                                <a href="/questions/<%= question._id %>/answers/<%= answer._id %>/edit">Edytuj odpowiedź</a>
+                                                <a href="/questions/<%= question._id %>/answers/<%= answer._id %>/delete">Usuń odpowiedź</a>
+                                            </li>
+                                        <% } else { %>
+                                            <li>
+                                                <%= answer.text %>
+                                                <br>
+                                                <a href="/questions/<%= question._id %>/answers/<%= answer._id %>/edit">Edytuj odpowiedź</a>
+                                                <a href="/questions/<%= question._id %>/answers/<%= answer._id %>/delete">Usuń odpowiedź</a>
+                                            </li>
+                                        <% } %>
+                                    <% }) %>
+                                </ul>
+                                
+                            <% } %>
+                            <a href="/questions/<%= question._id %>/edit" class="btn btn-success">Edytuj</a>
+                            <a href="/questions/<%= question._id %>/delete" class="btn btn-danger">Usuń</a>
+                            <% if(question.answers.length <= 3){ %>
+                                <a href="/questions/<%= question._id %>/answers/new" class="btn btn-primary">Dodaj odpowiedź</a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+<% } %> 
+
+
+
+<%- include("partials/footer") %>

@@ -1,0 +1,25 @@
+<%- include("../partials/header") %>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12 text-center" style="margin-top: 3%;">
+            <% if(response === "noTimeLeft"){ %>
+                <i class="fas fa-clock bg-secondary fa-5x icon" style="color: white;"></i>
+                <p class="title text-secondary">Niestety minął czas na odpowiedź</p>
+                <p class="section text-secondary">Poprawna odpowiedź: <strong><%= answer.text %></strong></p>
+            <% } else if(response === "success"){ %>
+                <i class="far fa-check-circle bg-success fa-5x icon" style="color: white;"></i>
+                <p class="title text-success">Twoja odpowiedź jest poprawna</p>
+                <p class="section text-success">Twoja odpowiedź: <em><%= userAnswer %></em></p>
+                <p class="section text-success">Poprawna odpowiedź: <strong><%= answer.text %></strong></p>
+            <% } else if(response === "failure"){ %>
+                <i class="fas fa-times bg-danger fa-5x icon" style="color: white;"></i>
+                <p class="title text-danger">Niestety twoja odpowiedź jest niepoprawna</p>
+                <p class="section text-danger">Twoja odpowiedź: <em><%= userAnswer %></em></p>
+                <p class="section text-danger">Poprawna odpowiedź: <strong><%= answer.text %></strong></p>
+            <% } %>
+            <a href="/" class="btn btn-primary button-small">Wylosuj inne pytanie</a>
+            
+        </div>
+    </div>
+</div>
+<%- include("../partials/footer") %>

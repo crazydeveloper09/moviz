@@ -1,0 +1,56 @@
+<%- include("../partials/headera") %>
+<div class="col-lg-6 col-md-12" id="form">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-12" style="margin-top: 18%">
+            <div id="form1">
+                <a href="/dashboard">
+                    <i class="fas fa-arrow-left"></i>
+                    Wróć do panelu administracyjnego
+                </a>
+                <h1 class="login">Edytuj użytkownika <%= admin.username %></h1>
+                <% if(error.length > 0){ %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
+                <% } %>
+                <% if(success.length > 0){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                <% } %>
+                <form action="/admin/<%= admin._id %>?_method=PUT" method="post">
+                   
+                    <label for="username" class="username">
+                        Edytuj nazwę użytkownika
+                        
+                    </label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1" style="color:#212529; background: #fff;"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="admin[username]" id="username" value="<%= admin.username %>" placeholder="heheszki" aria-label="Hasło" aria-describedby="basic-addon1">
+                    </div>
+                    <label for="username" class="username">
+                        Edytuj imię i nazwisko
+                        
+                    </label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1" style="color:#212529; background: #fff;"><i class="fas fa-address-card"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="admin[name]" id="username" value="<%= admin.name %>" placeholder="Jan Kowalski" aria-label="Hasło" aria-describedby="basic-addon1">
+                    </div>
+                    
+                    
+                    <input type="submit" value="Edytuj użytkownika" class="btn btn-danger button">
+                   
+                </form>
+            </div>
+           
+        </div>
+        
+    </div>
+</div>
+
+</body>
+</html>
