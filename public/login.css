@@ -63,7 +63,8 @@ a {
     #form1 {
         padding: 4%;
     }
-    body {
+    body,
+	html {
         background: #1a1a1a;
     }
 }
