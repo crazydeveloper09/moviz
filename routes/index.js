@@ -43,8 +43,8 @@ router.post("/register", function(req, res){
         });
         Admin.register(newAdmin, req.body.password, function(err, user) {
             if(err) {
-                
-                return res.render("register");
+                req.flash("error", err.message)
+                return res.render("register", {header:"Rejestracja | Moviz"});
             } 
             passport.authenticate("local")(req, res, function() {
                 
