@@ -37,7 +37,7 @@ router.put("/:admin_id", isLoggedIn, (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.redirect(`/admins`);
+            res.redirect(`/admin`);
         }
     })
        
@@ -50,7 +50,7 @@ router.get("/:admin_id/delete", isLoggedIn, (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.redirect(`/admins`);
+            res.redirect(`/admin`);
         }
     })
       
