@@ -28,7 +28,7 @@
                           
                             <% if(question.type === "Kadr" || question.type === "Postacie"){ %>
                                 <% if(question.type === "Kadr" || question.heroType === "Zdjęcie bohatera"){ %>
-                                    <img src="<%= question.file %>" alt="Zdjęcie pytania lub postaci">
+                                    <img src="<%= question.file %>" alt="Zdjęcie pytania lub postaci" class="card-img-top">
                                 <% } %>
                             <% } %>
                             <div class="card-title text-center admin_title">
