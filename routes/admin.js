@@ -44,6 +44,20 @@ router.put("/:admin_id", isLoggedIn, (req, res) => {
   
 });
 
+router.get("/:admin_id/delete/confirm", isLoggedIn, (req, res) => {
+   
+    Admin.findById(req.params.admin_id, (err, admin) => {
+        if (err) {
+            console.log(err);
+        } else {
+            let header = `Potwierdzenie usunięcia | ${admin.username} | Administratorzy | Moviz`;
+            res.render("./admin/delete", {admin: admin, header: header, currentUser: req.user})
+        }
+    })
+      
+  
+})
+
 router.get("/:admin_id/delete", isLoggedIn, (req, res) => {
    
     Admin.findByIdAndRemove(req.params.admin_id, (err, updatedadmin) => {

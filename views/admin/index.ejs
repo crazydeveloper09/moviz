@@ -33,7 +33,7 @@
                         <% if(currentUser._id == admin._id){ %>
                             <a href="/admin/<%= admin._id %>/edit" class="btn btn-secondary">Edytuj</a>
                         <% } %>
-                        <a href="/admin/<%= admin._id %>/delete" class="btn btn-dark">Usuń</a>
+                        <a href="/admin/<%= admin._id %>/delete/confirm" class="btn btn-dark">Usuń</a>
                     </div>
                 </div>
             <% }) %>

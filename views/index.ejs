@@ -18,8 +18,8 @@
                     <div class="card-body">
                         <div class="card-title text-center">Sprawdź swoją bajkową wiedzę z Moviz!</div>
                         
-                        <h3 class="section text-center">Wylosuj pytanie</h3>
-                        <form action="/questions/random" method="post">
+                        <h3 class="section text-center">Wylosuj jedno z <%= questions.length %> pytań</h3>
+                        <form action="/questions/random" method="get">
                             <p class="form_desc">Wybierz kategorię</p>
                             <select name="category" class="form-control">
                                 <option>Łatwe</option>

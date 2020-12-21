@@ -1,0 +1,57 @@
+<%- include("../partials/headera") %>
+<div class="col-lg-6 col-md-12" id="form">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-12" style="margin-top: 10%">
+            <div id="form1">
+                <a href="/dashboard">
+                    <i class="fas fa-arrow-left"></i>
+                    Wróć do panelu administracyjnego
+                </a>
+                <h1 class="login">
+                    Dodaj/edytuj 
+                    <% if(question.type === "Soundtrack"){ %>
+                        plik muzyczny soundtracka
+                    <% } else if(question.type === "Piosenka"){ %>
+                        plik mp3 piosenki
+                    <% } else if(question.type === "Kadr"){ %>
+                        zdjęcie kadru
+                    <% } else if(question.type === "Postacie"){ %>
+                        zdjęcie postaci
+                    <% } %>
+                </h1>
+                <% if(error.length > 0){ %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
+                <% } %>
+                <% if(success.length > 0){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                <% } %>
+                <form action="/questions/<%= question._id %>/editFile" method="post" enctype="multipart/form-data">
+                   
+                    
+                     
+                     <div id="file">
+                        <label for="username" class="username file_desc">
+                            Dodaj plik
+                             
+                        </label>
+                        <br>
+                        <input type="file" name="file" style="color: white;">
+                        <br>
+                        <br>
+                     </div>
+                    <input type="submit" value="Dodaj/edytuj zdjęcie/plik mp3" class="btn btn-danger button">
+                   
+                </form>
+            </div>
+           
+        </div>
+        
+    </div>
+</div>
+
+</body>
+</html>

@@ -14,6 +14,7 @@ let questionSchema = new mongoose.Schema({
     timeToAnswer: Number,
     quote: String,
     heroType: String,
+    dataType: String,
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Admin"

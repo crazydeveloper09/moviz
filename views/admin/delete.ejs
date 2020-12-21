@@ -1,0 +1,41 @@
+<%- include("../partials/header") %>
+    
+   
+    <div class="container">
+       
+        <% if(error.length > 0){ %>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-12">
+                    <div class="alert alert-danger text-center">
+                        <%= error %>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+       
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        
+                        
+                      
+                        <div class="card-title text-center">
+                            Czy na pewno chcesz usunąć użytkownika <%= admin.username %>?
+                        </div>
+                        
+                       
+                        <a href="/admin/<%= admin._id %>/delete" class="btn btn-danger button">Tak, usuń</a>
+                        <br>
+                        <br>
+                        <a href="/dashboard" class="btn btn-secondary" style="width: 100%;font-weight: 700">
+                            Wróć do panelu adminstracyjnego
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<%- include("../partials/footer") %>

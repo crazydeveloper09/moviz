@@ -1,13 +1,15 @@
-<%- include("partials/header") %>
+<%- include("../partials/header") %>
 <br>
 <div class="container">
     <div class="row">
         <div class="col-lg-12 text-center title">
-            Pytania, które dodałeś: <%= questions.length %>
+            Pytania, które dodałeś w kategorii <%= category %> i typie <%= type %>: <%= questions.length %>
             <br>
-            <a data-toggle="modal" data-target="#exampleModal" style="cursor:pointer" class="btn btn-dark">Wyszukaj pytanie</a>
+            <a data-toggle="modal" data-target="#exampleModal" style="cursor:pointer" class="btn btn-dark">
+                Wyszukaj pytania z innych kategorii
+            </a>
+        
         </div>
-       
     </div>
 </div>
 <% if(questions.length === 0){ %>
@@ -15,7 +17,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-12">
                 <div class="alert alert-dark text-center">
-                    Nie dodałeś jeszcze pytań
+                    Nie dodałeś jeszcze pytań w kategorii <%= category %> i typie <%= type %>
                 </div>
             </div>
         </div>
@@ -118,8 +120,6 @@
                                     
                                 </div>
                             </div>
-                            
-                           
                         </div>
                     </div>
                 </div>
@@ -127,7 +127,6 @@
         </div>
     </div>
 <% } %> 
-
 <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content" style="background: #1a1a1a">
@@ -171,4 +170,5 @@
   </div>
 
 
-<%- include("partials/footer") %>
+
+<%- include("../partials/footer") %>

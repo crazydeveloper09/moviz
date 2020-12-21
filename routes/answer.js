@@ -76,7 +76,7 @@ router.get("/response", (req, res) =>{
     }
 })
 router.post("/check", (req, res) => {
-    if(req.query.question_category === "Data produkcji"){
+    if(req.query.question_category === "Data produkcji" && req.query.question_dataType === "Rok produkcji"){
         let userAnswer = parseInt(req.body.answer);
         Answer.
         findOne({ 
@@ -217,7 +217,23 @@ router.put("/:answer_id", isLoggedIn, (req, res) => {
     })
   
 });
-
+router.get("/:answer_id/delete/confirm", isLoggedIn, (req, res) => {
+    Question.findById(req.params.question_id, (err, question) => {
+        if(err) {
+            console.log(err)
+        } else {
+            Answer.findById(req.params.answer_id, (err, answer) => {
+                if(err){
+                    console.log(err);
+                } else {
+                    let header = `Potwierdzenie usunięcia odpowiedzi ${answer.text} | Moviz`;
+                    res.render("./answers/delete", {header: header, currentUser: req.user, answer: answer, question: question})
+                }
+            })
+        }
+    })
+  
+})
 router.get("/:answer_id/delete", isLoggedIn, (req, res) => {
     Question.findById(req.params.question_id, (err, question) => {
         if(err) {

@@ -45,24 +45,43 @@ router.get("/new", isLoggedIn, (req, res) => {
    
 })
 
-router.post("/random", (req, res) => {
+router.get("/random", (req, res) => {
     Question
         .find({
-            $and: [{type: req.body.type}, {category: req.body.category}]
+            $and: [{type: req.query.type}, {category: req.query.category}]
         }, (err, questions) => {
         if(err){
             console.log(err)
         } else {
             if(questions.length === 0){
-                req.flash("error", `Nie znaleźliśmy pytań w kategorii ${req.body.category} i typie ${req.body.type}`)
+                req.flash("error", `Nie znaleźliśmy pytań w kategorii ${req.query.category} i typie ${req.query.type}`)
                 res.redirect("back")
             } else if(questions.length === 1){
                
-                res.redirect(`/questions/${questions[0]._id}?answerType=${req.body.answerType}`)
+                res.redirect(`/questions/${questions[0]._id}?answerType=${req.query.answerType}`)
             } else {
                
-                res.redirect(`/questions/${questions[Math.floor(Math.random() * questions.length)]._id}?answerType=${req.body.answerType}`)
+                res.redirect(`/questions/${questions[Math.floor(Math.random() * questions.length)]._id}?answerType=${req.query.answerType}`)
             }
+           
+        }
+    })
+})
+
+router.get("/search", isLoggedIn, (req, res) => {
+    Question
+        .find({
+            $and: [
+                {type: req.query.type}, 
+                {category: req.query.category},
+                {author: req.user._id}
+            ]
+        }).populate("answers").exec((err, questions) => {
+        if(err){
+            console.log(err)
+        } else {
+           let header = `Wyszukiwanie pytań dla kategorii ${req.query.category} i typie ${req.query.type} | Moviz`;
+           res.render("./questions/search", {questions: questions, header: header, category: req.query.category, type: req.query.type, currentUser: req.user})
            
         }
     })
@@ -105,6 +124,7 @@ router.post("/", upload.single("file"), (req, res) => {
             category: req.body.category,
             type: req.body.type,
             heroType: req.body.heroType,
+            dataType: req.body.dataType,
             timeToAnswer: req.body.timeToAnswer,
             quote: req.body.quote,
             author: req.user._id
@@ -169,6 +189,62 @@ router.put("/:question_id", isLoggedIn, (req, res) => {
        
   
 });
+router.get("/:question_id/editFile", isLoggedIn, (req, res) => {
+    
+    Question.findById(req.params.question_id, (err, question) => {
+        if (err) {
+            console.log(err)
+        } else {
+
+            let header = `Edytuj plik | ${question.title} | Moviz`;
+            res.render("./questions/editFile", { question: question, header: header })
+
+
+        }
+    })
+
+   
+});
+
+router.post("/:question_id/editFile", upload.single("file"), isLoggedIn, (req, res) => {
+  
+    Question.findById(req.params.question_id, (err, question) => {
+        if (err) {
+            console.log(err);
+        } else {
+            if(question.type === "Soundtrack" || question.type === "Piosenka"){
+                cloudinary.v2.uploader.upload(req.file.path, {resource_type: "video"}, function(err, result) {
+                    console.log(result)
+                    question.file = result.secure_url;
+                    question.save();
+                    res.redirect("/dashboard")
+                });
+            } else {
+                cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
+                    console.log(result)
+                    question.file = result.secure_url;
+                    question.save();
+                    res.redirect("/dashboard")
+                });
+            }
+        }
+    })
+       
+  
+});
+router.get("/:question_id/delete/confirm", isLoggedIn, (req, res) => {
+   
+    Question.findById(req.params.question_id, (err, question) => {
+        if (err) {
+            console.log(err);
+        } else {
+            let header = `Potweirdzenie usunięcia | ${question.title} | Moviz`;
+            res.render("./questions/delete", {header: header, question: question, currentUser: req.user})
+        }
+    })
+      
+  
+})
 
 router.get("/:question_id/delete", isLoggedIn, (req, res) => {
    

@@ -7,7 +7,14 @@ const express = require("express"),
 
 
 router.get("/", (req, res) => {
-    res.render("index", {header: "Wybierz pytanie | Moviz"});
+    Question.find({}, (err, questions) => {
+        if(err){
+            console.log(err)
+        } else {
+            res.render("index", {header: "Wybierz pytanie | Moviz", questions: questions});
+        }
+    })
+   
 })
 
 router.get("/login", function(req, res){
@@ -43,8 +50,8 @@ router.post("/register", function(req, res){
         });
         Admin.register(newAdmin, req.body.password, function(err, user) {
             if(err) {
-                req.flash("error", err.message)
-                return res.render("register", {header:"Rejestracja | Moviz"});
+                
+                return res.render("register");
             } 
             passport.authenticate("local")(req, res, function() {
                 

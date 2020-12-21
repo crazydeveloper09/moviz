@@ -56,7 +56,20 @@
                             <br>
                          </div>
                      <% } %>
-                     
+                     <% if(question.type === "Data produkcji"){ %>
+                        <div id="dataType">
+                            <label for="username" class="username">
+                                Edytuj, czego dotyczy pytanie o datę produkcji
+                                 
+                            </label>
+                            <select name="question[dataType]" id="dataTypeSelect" class="form-control">
+                                <option>Typ pytania o date produkcji</option>
+                                <option>Rok produkcji</option>
+                                <option>Nazwa bajki</option>
+                            </select>
+                            <br>
+                         </div>
+                     <% } %>
                      
                      
                     <input type="submit" value="Edytuj pytanie" class="btn btn-danger button">
