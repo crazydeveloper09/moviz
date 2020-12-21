@@ -26,7 +26,14 @@ router.get("/login", function(req, res){
 });
 
 router.get("/register", function(req, res){
-    res.render("register", {header:"Rejestracja | Moviz"})
+    if(req.query.code === "gigamocni"){
+        res.render("register", {header:"Rejestracja | Moviz"})
+    } else {
+        req.flash("error", "Nie masz dostępu do tej strony");
+        res.redirect(`/`);
+
+    }
+    
 });
 
 router.post("/login", passport.authenticate("local", {
@@ -70,6 +77,10 @@ router.get("/dashboard", isLoggedIn, (req, res) => {
         }
     })
     
+})
+
+router.get("*", (req, res) => {
+    res.render("error", {header: "Nie znaleziono strony | Moviz"})
 })
 
 
