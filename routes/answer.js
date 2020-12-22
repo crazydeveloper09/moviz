@@ -85,56 +85,62 @@ router.post("/check", (req, res) => {
                         
                    
     } else {
-        if (req.query.question_category === "Data produkcji" && req.query.question_dataType === "Rok produkcji") {
-            let userAnswer = parseInt(req.body.answer);
-            Answer.
-                findOne({
-                    $and: [
-                        { question: req.params.question_id },
-                        { type: true }
-                    ]
-                })
-                .populate("question").exec((err, answer) => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        let parsedAnswer = parseInt(answer.text);
-    
-                        console.log(parsedAnswer)
-                        if (userAnswer >= (parsedAnswer - 5) && userAnswer <= (parsedAnswer + 5)) {
-                            let route = `/questions/${req.params.question_id}/answers/response?response=success&answer_id=${answer._id}&userAnswer=${req.body.answer}`;
-                            res.redirect(route)
-                        } else {
-                            let route = `/questions/${req.params.question_id}/answers/response?response=failure&userAnswer=${req.body.answer}`;
-                            res.redirect(route)
-                        }
-                    }
-                })
-        } else {
-            const regex = new RegExp(escapeRegex(req.body.answer), 'gi');
-            Answer
-                .findOne({
-                    $and:
-                        [
+        if(req.body.answer){
+            if (req.query.question_category === "Data produkcji" && req.query.question_dataType === "Rok produkcji") {
+                let userAnswer = parseInt(req.body.answer);
+                Answer.
+                    findOne({
+                        $and: [
                             { question: req.params.question_id },
-                            { type: true },
-                            { text: regex }
+                            { type: true }
                         ]
-                }, (err, answer) => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        if (answer) {
-                            let route = `/questions/${req.params.question_id}/answers/response?response=success&answer_id=${answer._id}&userAnswer=${req.body.answer}`;
-                            res.redirect(route)
+                    })
+                    .populate("question").exec((err, answer) => {
+                        if (err) {
+                            console.log(err)
                         } else {
-                            let route = `/questions/${req.params.question_id}/answers/response?response=failure&userAnswer=${req.body.answer}`;
-                            res.redirect(route)
+                            let parsedAnswer = parseInt(answer.text);
+        
+                            console.log(parsedAnswer)
+                            if (userAnswer >= (parsedAnswer - 5) && userAnswer <= (parsedAnswer + 5)) {
+                                let route = `/questions/${req.params.question_id}/answers/response?response=success&answer_id=${answer._id}&userAnswer=${req.body.answer}`;
+                                res.redirect(route)
+                            } else {
+                                let route = `/questions/${req.params.question_id}/answers/response?response=failure&userAnswer=${req.body.answer}`;
+                                res.redirect(route)
+                            }
+                        }
+                    })
+            } else {
+                const regex = new RegExp(escapeRegex(req.body.answer), 'gi');
+                Answer
+                    .findOne({
+                        $and:
+                            [
+                                { question: req.params.question_id },
+                                { type: true },
+                                { text: regex }
+                            ]
+                    }, (err, answer) => {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            if (answer) {
+                                let route = `/questions/${req.params.question_id}/answers/response?response=success&answer_id=${answer._id}&userAnswer=${req.body.answer}`;
+                                res.redirect(route)
+                            } else {
+                                let route = `/questions/${req.params.question_id}/answers/response?response=failure&userAnswer=${req.body.answer}`;
+                                res.redirect(route)
+                            }
                         }
                     }
-                }
-                )
+                    )
+            }
+        } else {
+            let route = `/questions/${req.params.question_id}/answers/response?response=failure&userAnswer=brak`;
+            res.redirect(route)
         }
+        
     }
     
 })
