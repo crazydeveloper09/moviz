@@ -67,7 +67,7 @@
                         <br>
                         <br>
                         <div class="text-center">
-                            <a href="/" class="btn btn-primary button-small">Wylosuj inne pytanie</a>
+                            <a href="/questions/random?type=all&answerType=<%= answerType %>" class="btn btn-primary button-small">Wylosuj inne pytanie</a>
                             <span class="description">lub</span>
                             <% if(answerType === "choose"){ %>
                                 <a href="/questions/<%= question._id %>?answerType=write" class="btn btn-secondary" style="font-weight:700">
@@ -84,9 +84,17 @@
                         <div class="card-title text-center">
                             <%= question.title %>
                         </div>
+                        <p class="footer text-center">
+                            Kategoria: <%= question.category %>
+                            <br>
+                            <span>Typ: <%= question.type %></span>
+                        </p>
                         
                         <% if(question.type === "Soundtrack" || question.type === "Piosenka"){ %>
-                            <audio src="<%= question.file %>" controls="controls"></audio>
+                            <div class="text-center">
+                                <audio src="<%= question.file %>" controls="controls"></audio>
+                            </div>
+                            
                         <% } %>
                         
                         <% if(question.type === "Cytat"){ %>

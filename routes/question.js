@@ -45,27 +45,39 @@ router.get("/new", isLoggedIn, (req, res) => {
    
 })
 
+
 router.get("/random", (req, res) => {
-    Question
-        .find({
-            $and: [{type: req.query.type}, {category: req.query.category}]
-        }, (err, questions) => {
-        if(err){
-            console.log(err)
-        } else {
-            if(questions.length === 0){
-                req.flash("error", `Nie znaleźliśmy pytań w kategorii ${req.query.category} i typie ${req.query.type}`)
-                res.redirect("back")
-            } else if(questions.length === 1){
-               
-                res.redirect(`/questions/${questions[0]._id}?answerType=${req.query.answerType}`)
+    if(req.query.type === "all"){
+        Question.find({}, (err, questions) => {
+            if(err){
+                console.log(err)
             } else {
-               
                 res.redirect(`/questions/${questions[Math.floor(Math.random() * questions.length)]._id}?answerType=${req.query.answerType}`)
             }
-           
-        }
-    })
+        })
+    } else {
+        Question
+            .find({
+                $and: [{type: req.query.type}, {category: req.query.category}]
+            }, (err, questions) => {
+            if(err){
+                console.log(err)
+            } else {
+                if(questions.length === 0){
+                    req.flash("error", `Nie znaleźliśmy pytań w kategorii ${req.query.category} i typie ${req.query.type}`)
+                    res.redirect("back")
+                } else if(questions.length === 1){
+                
+                    res.redirect(`/questions/${questions[0]._id}?answerType=${req.query.answerType}`)
+                } else {
+                
+                    res.redirect(`/questions/${questions[Math.floor(Math.random() * questions.length)]._id}?answerType=${req.query.answerType}`)
+                }
+            
+            }
+        })
+    }
+   
 })
 
 router.get("/search", isLoggedIn, (req, res) => {
