@@ -86,7 +86,10 @@ router.post("/check", (req, res) => {
                    
     } else {
         if(req.body.answer){
-            if (req.query.question_category === "Data produkcji" && req.query.question_dataType === "Rok produkcji") {
+            let question_category = req.query.question_category;
+            let question_dataType = req.query.question_dataType;
+            let answerType = req.query.answerType
+            if (question_category === "Data produkcji" && question_dataType === "Rok produkcji" && answerType === "write") {
                 let userAnswer = parseInt(req.body.answer);
                 Answer.
                     findOne({

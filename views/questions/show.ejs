@@ -103,7 +103,7 @@
                             </div>
                             
                         <% } %>
-                        <form action="/questions/<%= question._id %>/answers/check?question_category=<%= question.type %>&question_dataType=<%= question.dataType %>" method="post">
+                        <form action="/questions/<%= question._id %>/answers/check?question_category=<%= question.type %>&question_dataType=<%= question.dataType %>&answerType=<%= answerType %>" method="post">
                             <% if(answerType === "choose"){ %>
                                 <% answers.forEach((answer) => { %>
                                     <label class="radio">
