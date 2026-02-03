@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 let answerSchema = new mongoose.Schema({
   text: String,
@@ -9,4 +9,4 @@ let answerSchema = new mongoose.Schema({
   isCorrect: Boolean,
 });
 
-module.exports = mongoose.model("Answer", answerSchema);
+export default mongoose.model("Answer", answerSchema);
