@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import Admin from "./models/admin.js";
 import methodOverride from "method-override";
-import passport from "passport.js";
+import passport from "passport";
 import adminRoutes from "./routes/admin.js";
 import answerRoutes from "./routes/answer.js";
 import questionRoutes from "./routes/question.js";

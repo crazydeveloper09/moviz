@@ -5,7 +5,7 @@ import {
   findAllAdmins,
   renderAdminDeleteConfirmPage,
   renderAdminEditForm,
-} from "../controllers/admin";
+} from "../controllers/admin.js";
 import { isLoggedIn } from "../helpers.js";
 
 const router = express.Router();
