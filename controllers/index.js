@@ -40,7 +40,8 @@ export const registerAdmin = (req, res, next) => {
   });
   Admin.register(newAdmin, req.body.password, function (err, user) {
     if (err) {
-      return res.render("register");
+      req.flash("error", err);
+      return res.render("register", { header: "Rejestracja | Moviz" });
     }
     passport.authenticate("local")(req, res, function () {
       res.redirect("/login");

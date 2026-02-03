@@ -1,4 +1,4 @@
-import { imageFilter, storage } from "../helpers.js";
+import { imageFilter, isLoggedIn, storage } from "../helpers.js";
 
 import express from "express";
 import flash from "connect-flash";

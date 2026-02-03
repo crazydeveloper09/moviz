@@ -11,6 +11,13 @@ import LocalStrategy from "passport-local";
 import bodyParser from "body-parser";
 import flash from "connect-flash";
 import dotenv from "dotenv";
+import path from "path";
+import expressSession from "express-session";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+
+export const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const app = express();
@@ -24,7 +31,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
 app.use(
-  require("express-session")({
+  expressSession({
     secret: "heheszki",
     resave: false,
     saveUninitialized: false,

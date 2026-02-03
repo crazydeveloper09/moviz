@@ -12,6 +12,7 @@ import {
   renderAnswerResponsePage,
   renderNewAnswerForm,
 } from "../controllers/answer.js";
+import { isLoggedIn } from "../helpers.js";
 
 const app = express();
 const router = express.Router({ mergeParams: true });
