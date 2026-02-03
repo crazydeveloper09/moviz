@@ -1,18 +1,19 @@
-const express = require("express"),
-  app = express(),
-  mongoose = require("mongoose"),
-  Admin = require("./models/admin"),
-  methodOverride = require("method-override"),
-  passport = require("passport"),
-  adminRoutes = require("./routes/admin"),
-  answerRoutes = require("./routes/answer"),
-  questionRoutes = require("./routes/question"),
-  indexRoutes = require("./routes/index"),
-  LocalStrategy = require("passport-local"),
-  bodyParser = require("body-parser"),
-  flash = require("connect-flash");
+import express from "express";
+import mongoose from "mongoose";
+import Admin from "./models/admin.js";
+import methodOverride from "method-override";
+import passport from "passport.js";
+import adminRoutes from "./routes/admin.js";
+import answerRoutes from "./routes/answer.js";
+import questionRoutes from "./routes/question.js";
+import indexRoutes from "./routes/index.js";
+import LocalStrategy from "passport-local";
+import bodyParser from "body-parser";
+import flash from "connect-flash";
+import dotenv from "dotenv";
 
-require("dotenv").config();
+dotenv.config();
+const app = express();
 
 mongoose.connect(process.env.DATABASE_URL);
 
