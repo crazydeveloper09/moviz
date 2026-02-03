@@ -1,97 +1,34 @@
-const express = require("express"),
-    app = express(),
-    Admin = require("../models/admin"),
-    Question = require("../models/question"),
-    passport = require("passport"),
-    router = express.Router();
+import express from "express";
+import passport from "passport";
+import {
+  logOutAdmin,
+  registerAdmin,
+  renderDashboard,
+  renderErrorPage,
+  renderHomePage,
+  renderLoginPage,
+  renderRegisterPage,
+} from "../controllers/index.js";
+import { isLoggedIn } from "../helpers.js";
 
+const router = express.Router();
 
-router.get("/", (req, res) => {
-    Question.find({}, (err, questions) => {
-        if(err){
-            console.log(err)
-        } else {
-            res.render("index", {header: "Wybierz pytanie | Moviz", questions: questions});
-        }
-    })
-   
-})
+router.get("/", renderHomePage);
+router.get("/login", renderLoginPage);
+router.get("/register", renderRegisterPage);
+router.get("/logout", logOutAdmin);
+router.get("/dashboard", isLoggedIn, renderDashboard);
+router.get("*", renderErrorPage);
 
-router.get("/login", function(req, res){
-    if(req.isAuthenticated()){
-        res.redirect("/dashboard")
-    } else {
-        res.render("login", {header:"Logowanie | Moviz"});
-    }
-});
-
-router.get("/register", function(req, res){
-    if(req.query.code === "gigamocni"){
-        res.render("register", {header:"Rejestracja | Moviz"})
-    } else {
-        req.flash("error", "Nie masz dostępu do tej strony");
-        res.redirect(`/`);
-
-    }
-    
-});
-
-router.post("/login", passport.authenticate("local", {
+router.post(
+  "/login",
+  passport.authenticate("local", {
     successRedirect: "/dashboard",
     failureRedirect: "/login",
-    failureFlash: true
-}), function(req, res) {
+    failureFlash: true,
+  }),
+  function (req, res) {},
+);
+router.post("/register", registerAdmin);
 
-});
-router.get("/logout", function(req, res) {
-    req.logout();
-    res.redirect("/");
-});
-
-router.post("/register", function(req, res){
-    
-   
-        let newAdmin = new Admin({
-            username: req.body.username,
-            name: req.body.name
-        });
-        Admin.register(newAdmin, req.body.password, function(err, user) {
-            if(err) {
-                
-                return res.render("register");
-            } 
-            passport.authenticate("local")(req, res, function() {
-                
-                res.redirect("/login");
-            });
-        });
-});
-
-router.get("/dashboard", isLoggedIn, (req, res) => {
-    Question.find({author: req.user._id}).populate("answers").exec((err, questions) => {
-        if(err){
-            console.log(err)
-        } else {
-            let header = "Dashboard | Moviz";
-            res.render("dashboard", {header: header, currentUser: req.user, questions: questions})
-        }
-    })
-    
-})
-
-router.get("*", (req, res) => {
-    res.render("error", {header: "Nie znaleziono strony | Moviz"})
-})
-
-
-function isLoggedIn (req, res, next) {
-    if(req.isAuthenticated()) {
-        return next();
-    }
-    req.flash("error", "Nie masz dostępu do tej strony");
-    res.redirect(`/`);
-}
-
-
-
-module.exports = router;
+export default router;

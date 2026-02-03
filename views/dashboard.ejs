@@ -5,170 +5,178 @@
         <div class="col-lg-12 text-center title">
             Pytania, które dodałeś: <%= questions.length %>
             <br>
-            <a data-toggle="modal" data-target="#exampleModal" style="cursor:pointer" class="btn btn-dark">Wyszukaj pytanie</a>
+            <a data-toggle="modal" data-target="#exampleModal" style="cursor:pointer" class="btn btn-dark">Wyszukaj
+                pytanie</a>
         </div>
-       
+
     </div>
 </div>
 <% if(questions.length === 0){ %>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-12">
-                <div class="alert alert-dark text-center">
-                    Nie dodałeś jeszcze pytań
-                </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-12">
+            <div class="alert alert-dark text-center">
+                Nie dodałeś jeszcze pytań
             </div>
         </div>
     </div>
+</div>
 <% } else { %>
-    <div class="container">
-        <div class="row">
-            
-            <% for(let i = questions.length -1; i>=0; i --) { %>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="card admin">
-                        <% if(questions[i].type === "Kadr" || questions[i].type === "Postacie"){ %>
-                            <% if(questions[i].type === "Kadr" || questions[i].heroType === "Zdjęcie bohatera"){ %>
-                                <img src="<%= questions[i].file %>" alt="Zdjęcie pytania lub postaci" class="card-img-top">
-                            <% } %>
+<div class="container">
+    <div class="row">
+
+        <% for(let i = questions.length -1; i>=0; i --) { %>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card admin">
+                <% if(questions[i].type === "Kadr" || questions[i].type === "Postacie"){ %>
+                <% if(questions[i].type === "Kadr" || questions[i].heroType === "Zdjęcie bohatera"){ %>
+                <img src="<%= questions[i].file %>" alt="Zdjęcie pytania lub postaci" class="card-img-top">
+                <% } %>
+                <% } %>
+
+                <div class="card-body">
+
+
+                    <div class="card-title text-center admin_title">
+                        <%= questions[i].title %>
+                    </div>
+                    <% if(questions[i].type === "Soundtrack" || questions[i].type === "Piosenka"){ %>
+                    <audio src="<%= questions[i].file %>" controls="controls"></audio>
+                    <% } %>
+                    <p class="description">
+                        Kategoria: <strong><%= questions[i].category %></strong>
+                    </p>
+                    <p class="description">
+                        Typ: <strong><%= questions[i].type %></strong>
+                    </p>
+
+                    <p class="description">
+                        Czas na odpowiedź: <strong><%= questions[i].timeToAnswer %></strong>
+                    </p>
+                    <% if(questions[i].type === "Cytat"){ %>
+                    <p class="description">
+                        Cytat: <strong><%= questions[i].quote %></strong>
+                    </p>
+                    <% } %>
+                    <% if(questions[i].answers.length !== 0){ %>
+                    <p class="description">Odpowiedzi:</p>
+                    <ul class="description">
+
+                        <% questions[i].answers.forEach((answer) => { %>
+                        <% if(answer.isCorrect){ %>
+                        <li>
+                            <mark><%= answer.text %></mark>
+                            <br>
+                            <a href="/questions/<%= questions[i]._id %>/answers/<%= answer._id %>/edit">Edytuj
+                                odpowiedź</a>
+                            <a href="/questions/<%= questions[i]._id %>/answers/<%= answer._id %>/delete/confirm">Usuń
+                                odpowiedź</a>
+                        </li>
+                        <% } else { %>
+                        <li>
+                            <%= answer.text %>
+                            <br>
+                            <a href="/questions/<%= questions[i]._id %>/answers/<%= answer._id %>/edit">Edytuj
+                                odpowiedź</a>
+                            <a href="/questions/<%= questions[i]._id %>/answers/<%= answer._id %>/delete/confirm">Usuń
+                                odpowiedź</a>
+                        </li>
                         <% } %>
-                        
-                        <div class="card-body">
-                          
-                           
-                            <div class="card-title text-center admin_title">
-                                <%= questions[i].title %>
-                            </div>
-                            <% if(questions[i].type === "Soundtrack" || questions[i].type === "Piosenka"){ %>
-                                <audio src="<%= questions[i].file %>" controls="controls"></audio>
+                        <% }) %>
+                    </ul>
+
+                    <% } %>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle justify-content-center" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Modyfikacja
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background: #eeeeee">
+                            <a href="/questions/<%= questions[i]._id %>/edit" class="dropdown-item">Edytuj</a>
+                            <a href="/questions/<%= questions[i]._id %>/delete/confirm" class="dropdown-item">Usuń</a>
+                            <% if(questions[i].answers.length <= 3){ %>
+                            <a href="/questions/<%= questions[i]._id %>/answers/new" class="dropdown-item">Dodaj
+                                odpowiedź</a>
                             <% } %>
-                            <p class="description">
-                                Kategoria: <strong><%= questions[i].category %></strong>
-                            </p>
-                            <p class="description">
-                                Typ: <strong><%= questions[i].type %></strong>
-                            </p>
-                            
-                            <p class="description">
-                                Czas na odpowiedź: <strong><%= questions[i].timeToAnswer %></strong>
-                            </p>
-                            <% if(questions[i].type === "Cytat"){ %>
-                                <p class="description">
-                                    Cytat: <strong><%= questions[i].quote %></strong>
-                                </p>
+
+                            <% if(questions[i].type === "Soundtrack"){ %>
+                            <a href="/questions/<%= questions[i]._id %>/editFile" class="dropdown-item">
+                                Dodaj/edytuj
+                                plik muzyczny soundtracka
+                            </a>
+                            <% } else if(questions[i].type === "Piosenka"){ %>
+                            <a href="/questions/<%= questions[i]._id %>/editFile" class="dropdown-item">
+                                Dodaj/edytuj
+                                plik mp3 piosenki
+                            </a>
+                            <% } else if(questions[i].type === "Kadr"){ %>
+                            <a href="/questions/<%= questions[i]._id %>/editFile" class="dropdown-item">
+                                Dodaj/edytuj
+                                zdjęcie kadru
+                            </a>
+                            <% } else if(questions[i].type === "Postacie" && questions[i].heroType === "Zdjęcie bohatera"){ %>
+                            <a href="/questions/<%= questions[i]._id %>/editFile" class="dropdown-item">
+                                Dodaj/edytuj
+                                zdjęcie postaci
+                            </a>
                             <% } %>
-                            <% if(questions[i].answers.length !== 0){ %>
-                                <p class="description">Odpowiedzi:</p>
-                                <ul class="description">
-                                   
-                                    <% questions[i].answers.forEach((answer) => { %>
-                                        <% if(answer.type){ %>
-                                            <li>
-                                                <mark><%= answer.text %></mark>
-                                                <br>
-                                                <a href="/questions/<%= questions[i]._id %>/answers/<%= answer._id %>/edit">Edytuj odpowiedź</a>
-                                                <a href="/questions/<%= questions[i]._id %>/answers/<%= answer._id %>/delete/confirm">Usuń odpowiedź</a>
-                                            </li>
-                                        <% } else { %>
-                                            <li>
-                                                <%= answer.text %>
-                                                <br>
-                                                <a href="/questions/<%= questions[i]._id %>/answers/<%= answer._id %>/edit">Edytuj odpowiedź</a>
-                                                <a href="/questions/<%= questions[i]._id %>/answers/<%= answer._id %>/delete/confirm">Usuń odpowiedź</a>
-                                            </li>
-                                        <% } %>
-                                    <% }) %>
-                                </ul>
-                                
-                            <% } %>
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle justify-content-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Modyfikacja
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background: #eeeeee">
-                                    <a href="/questions/<%= questions[i]._id %>/edit" class="dropdown-item">Edytuj</a>
-                                    <a href="/questions/<%= questions[i]._id %>/delete/confirm" class="dropdown-item">Usuń</a>
-                                    <% if(questions[i].answers.length <= 3){ %>
-                                        <a href="/questions/<%= questions[i]._id %>/answers/new" class="dropdown-item">Dodaj odpowiedź</a>
-                                    <% } %>
-                                    
-                                        <% if(questions[i].type === "Soundtrack"){ %>
-                                            <a href="/questions/<%= questions[i]._id %>/editFile" class="dropdown-item">
-                                                Dodaj/edytuj 
-                                                plik muzyczny soundtracka
-                                            </a>
-                                        <% } else if(questions[i].type === "Piosenka"){ %>
-                                            <a href="/questions/<%= questions[i]._id %>/editFile" class="dropdown-item">
-                                                Dodaj/edytuj 
-                                                plik mp3 piosenki
-                                            </a>
-                                        <% } else if(questions[i].type === "Kadr"){ %>
-                                            <a href="/questions/<%= questions[i]._id %>/editFile" class="dropdown-item">
-                                                Dodaj/edytuj 
-                                                zdjęcie kadru
-                                            </a>
-                                        <% } else if(questions[i].type === "Postacie" && questions[i].heroType === "Zdjęcie bohatera"){ %>
-                                            <a href="/questions/<%= questions[i]._id %>/editFile" class="dropdown-item">
-                                                Dodaj/edytuj 
-                                                zdjęcie postaci
-                                            </a>
-                                        <% } %>
-                                   
-                                    
-                                    
-                                </div>
-                            </div>
-                            
-                           
+
+
+
                         </div>
                     </div>
-                </div>
-            <% } %>
-        </div>
-    </div>
-<% } %> 
 
-<div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content" style="background: #1a1a1a">
-        <div class="modal-header">
-          <h5 class="modal-title section" id="exampleModalLabel">
-             Wyszukaj pytanie
-            </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" style="color: #7a519e">&times;</span>
-          </button>
-        </div>
-        <form action="/questions/search" method="get">
-            <div class="modal-body">
-                <p class="form_desc">Wybierz kategorię</p>
-                            <select name="category" class="form-control">
-                                <option>Łatwe</option>
-                                <option>Średnie</option>
-                                <option>Trudne</option>
-                            </select>
-                            <br>
-                            <p class="form_desc">Wybierz typ</p>
-                            <select name="type" class="form-control">
-                                <option>Kadr</option>
-                                <option>Cytat</option>
-                                <option>Soundtrack</option>
-                                <option>Piosenka</option>
-                                <option>Postacie</option>
-                                <option>Data produkcji</option>
-                            </select>
-                            <br>
-                <input type="submit" value="Wyszukaj" class="btn btn-primary">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+
+                </div>
             </div>
-            
-            
-        </form>
-        
-        
-      </div>
+        </div>
+        <% } %>
     </div>
-  </div>
+</div>
+<% } %>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background: #1a1a1a">
+            <div class="modal-header">
+                <h5 class="modal-title section" id="exampleModalLabel">
+                    Wyszukaj pytanie
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: #7a519e">&times;</span>
+                </button>
+            </div>
+            <form action="/questions/search" method="get">
+                <div class="modal-body">
+                    <p class="form_desc">Wybierz kategorię</p>
+                    <select name="category" class="form-control">
+                        <option>Łatwe</option>
+                        <option>Średnie</option>
+                        <option>Trudne</option>
+                    </select>
+                    <br>
+                    <p class="form_desc">Wybierz typ</p>
+                    <select name="type" class="form-control">
+                        <option>Kadr</option>
+                        <option>Cytat</option>
+                        <option>Soundtrack</option>
+                        <option>Piosenka</option>
+                        <option>Postacie</option>
+                        <option>Data produkcji</option>
+                    </select>
+                    <br>
+                    <input type="submit" value="Wyszukaj" class="btn btn-primary">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                </div>
+
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
 
 
 <%- include("partials/footer") %>

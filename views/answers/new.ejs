@@ -9,43 +9,44 @@
                 </a>
                 <h1 class="login">Dodaj odpowiedź na pytanie <q><%= question.title %></q></h1>
                 <% if(error.length > 0){ %>
-                    <div class="alert alert-danger" role="alert">
-                        <%= error %>
-                    </div>
+                <div class="alert alert-danger" role="alert">
+                    <%= error %>
+                </div>
                 <% } %>
                 <% if(success.length > 0){ %>
-                    <div class="alert alert-success" role="alert">
-                        <%= success %>
-                    </div>
+                <div class="alert alert-success" role="alert">
+                    <%= success %>
+                </div>
                 <% } %>
                 <form action="/questions/<%= question._id %>/answers" method="post">
-                   
+
                     <label for="username" class="username">
                         Wybierz typ
-                        
+
                     </label>
-                    <select name="type" class="form-control">
+                    <select name="isCorrect" class="form-control">
                         <option>Poprawna</option>
                         <option>Niepoprawna</option>
                     </select>
                     <br>
-                    
+
                     <label for="username" class="username">
-                       Podaj tekst odpowiedzi
-                        
+                        Podaj tekst odpowiedzi
+
                     </label>
                     <textarea name="text" placeholder="Mulan" class="form-control"></textarea>
                     <br>
-                    
+
                     <input type="submit" value="Dodaj odpowiedź na pytanie" class="btn btn-danger button">
-                   
+
                 </form>
             </div>
-           
+
         </div>
-        
+
     </div>
 </div>
 
 </body>
+
 </html>
